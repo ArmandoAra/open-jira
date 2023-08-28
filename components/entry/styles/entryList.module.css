@@ -1,0 +1,22 @@
+.paper {
+  height: calc(100vh - 250px);
+  overflow: scrol;
+  background-color: transparent;
+  padding: 2;
+}
+
+.listNormalOpacity {
+  opacity: 1;
+  transition: all 0.2s ease-in-out;
+}
+
+.listMediumOpacity {
+  opacity: 0.5;
+  transition: all 0.2s ease-in-out;
+}
+
+.dragging {
+  background-color: #c9f8de;
+  border: 2px #3cb21b;
+  cursor: grabbing;
+}
