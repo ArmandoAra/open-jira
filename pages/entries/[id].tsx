@@ -1,8 +1,8 @@
 import React, { ChangeEvent, useMemo, useState, FC, useContext } from 'react'
 import { GetServerSideProps } from 'next';
+import { useRouter } from 'next/router';
 
 import { capitalize, Button, Card, CardActions, CardContent, CardHeader, FormControl, FormControlLabel, FormLabel, Grid, Radio, RadioGroup, TextField, IconButton } from '@mui/material';
-import Snackbar, { SnackbarOrigin } from '@mui/material/Snackbar';
 
 import SaveAltOutlinedIcon from '@mui/icons-material/SaveAltOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
@@ -14,7 +14,6 @@ import { Entry, EntryStatus } from '@/interfaces';
 import { isValidObjectId } from 'mongoose';
 import { getEntryById } from '@/database';
 
-
 const validStatus: EntryStatus[] = ["pending", "in-progress", "done"]
 
 
@@ -23,12 +22,9 @@ interface Props {
     entry: Entry
 }
 
-//Interface del box de notificacion de Save
-interface State extends SnackbarOrigin {
-    open: boolean;
-}
 
 export const EntryPage: FC<Props> = ({ entry }) => {
+    const router = useRouter()
 
     const [inputValue, setInputValue] = useState(entry.description);
     const [status, setStatus] = useState<EntryStatus>(entry.status);
@@ -36,6 +32,7 @@ export const EntryPage: FC<Props> = ({ entry }) => {
 
     //Accedemos al context, y desestructuramos algo que viene de nuestro EntriesContext
     const { updateEntry } = useContext(EntriesContext)
+    const { deleteEntry } = useContext(EntriesContext)
 
     //guardando en memoria para optimizar rendimiento
     const isNotValid = useMemo(() => inputValue.length <= 0 && touched, [inputValue, touched])
@@ -51,7 +48,7 @@ export const EntryPage: FC<Props> = ({ entry }) => {
     }
 
     /* Manejando el boton de Save */
-    const onSave = (newState: SnackbarOrigin) => {
+    const onSave = () => {
         if (inputValue.trim().length === 0) {
             return;
         }
@@ -61,18 +58,16 @@ export const EntryPage: FC<Props> = ({ entry }) => {
             status: status,
             description: inputValue,
         }
-        setStateNotice({ ...newState, open: true });
-        updateEntry(updatedEntry);
+
+        //Actualizamos la entrada con el metodo que viene de EntriesContext
+        updateEntry(updatedEntry, true);
+
     }
 
-    //Snackbar(codigo de notificacion de save)
-    const [stateNotice, setStateNotice] = React.useState<State>({
-        open: false,
-        vertical: 'top',
-        horizontal: 'center',
-    });
-    const { vertical, horizontal, open } = stateNotice;
-
+    const onDelete = () => {
+        deleteEntry(entry._id)
+        router.push('/')
+    }
 
     return (
         <Layout title={inputValue.length > 10 ? inputValue.substring(0, 12) + '...' : inputValue}>
@@ -141,13 +136,7 @@ export const EntryPage: FC<Props> = ({ entry }) => {
 
                     </Card>
                 </Grid>
-                <Snackbar
-                    anchorOrigin={{ vertical, horizontal }}
-                    open={open}
-                    onClose={handleClose}
-                    message="I love snacks"
-                    key={vertical + horizontal}
-                />
+
             </Grid>
 
             <IconButton sx={{
@@ -155,7 +144,9 @@ export const EntryPage: FC<Props> = ({ entry }) => {
                 bottom: 30,
                 right: 30,
                 backgroundColor: 'error.dark',
-            }}>
+            }}
+                onClick={onDelete}
+            >
                 <DeleteOutlineOutlinedIcon />
             </IconButton>
         </Layout>

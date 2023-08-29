@@ -8,6 +8,8 @@ import { Entry } from '@/interfaces';
 
 import { entriesApi } from '@/apis';
 
+import { useSnackbar } from 'notistack';
+
 
 interface EntriesProviderProps {
     children: React.ReactNode;
@@ -17,7 +19,6 @@ export interface EntriesState {
     entries: Entry[];
 }
 
-
 const ENTRIES_INITIAL_STATE: EntriesState = {
     entries: [],
 }
@@ -25,6 +26,9 @@ const ENTRIES_INITIAL_STATE: EntriesState = {
 export const EntriesProvider = ({ children }: EntriesProviderProps) => {
 
     const [state, dispatch] = useReducer(entriesReducer, ENTRIES_INITIAL_STATE)
+
+    //Tabajar las notificaciones
+    const { enqueueSnackbar } = useSnackbar();
 
     // Methods
     const addEntry = async (description: string) => {
@@ -43,7 +47,7 @@ export const EntriesProvider = ({ children }: EntriesProviderProps) => {
     }
 
     //Recibimos toda la entrada
-    const updateEntry = async ({ _id, description, status }: Entry) => {
+    const updateEntry = async ({ _id, description, status }: Entry, showSnackbar = false) => {
 
         try {
             // Se podria mandar toda la entrada pero es mas costosa en recursos, entonces mandamos solo description y status
@@ -51,10 +55,34 @@ export const EntriesProvider = ({ children }: EntriesProviderProps) => {
 
             dispatch({ type: 'ENTRY-UPDATED', payload: data, })
 
+            //Notificacion
+            if (showSnackbar) {
+                enqueueSnackbar('Saved', {
+                    variant: 'success',
+                    autoHideDuration: 2000,
+                    anchorOrigin: {
+                        vertical: 'top',
+                        horizontal: 'center'
+                    }
+                })
+            }
+
         } catch (error) {
             console.log("Error to update the entry in the Provider")
         }
 
+
+    }
+
+    const deleteEntry = async (id: string) => {
+        try {
+            await entriesApi.delete(`/entries/${id}`)
+            const { data } = await entriesApi.get<Entry[]>('/entries')
+            dispatch({ type: 'DELETE-ENTRY', payload: data })
+        }
+        catch (e) {
+            console.log(e)
+        }
 
     }
 
@@ -84,6 +112,7 @@ export const EntriesProvider = ({ children }: EntriesProviderProps) => {
             // Methohs
             addEntry,
             updateEntry,
+            deleteEntry,
         }}>
             {children}
         </EntriesContext.Provider>

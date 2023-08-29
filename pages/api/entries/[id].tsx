@@ -26,6 +26,8 @@ export default function handleIDs(req: NextApiRequest, res: NextApiResponse<Data
             return getEntryById(req, res)
         case 'PUT':
             return updateEntry(req, res)
+        case 'DELETE':
+            return deleteEntry(req, res)
         default:
             return res.status(400).json({ message: 'Invalid ID' + id })
     }
@@ -42,7 +44,22 @@ const getEntryById = async (req: NextApiRequest, res: NextApiResponse<Data>) => 
 
     } catch (error) {
         await disconnectDB();
-        res.status(400).json({ message: 'Somethin wrong to get the ID' })
+        res.status(400).json({ message: 'Something wrong to get the ID' })
+    }
+
+}
+
+const deleteEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+    const { id } = req.query
+    try {
+        await connectDB();
+        const entryExist = await EntryModel.findByIdAndDelete(id)
+        await disconnectDB();
+        res.status(200).json(entryExist!)
+
+    } catch (error) {
+        await disconnectDB();
+        res.status(400).json({ message: 'Something wrong deleting the entry' })
     }
 
 }

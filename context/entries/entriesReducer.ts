@@ -15,6 +15,7 @@ import { EntriesState } from '.';
 type EntriesActionType =
     | { type: 'ADD-ENTRY', payload: Entry }
     | { type: 'ENTRY-UPDATED', payload: Entry }
+    | { type: 'DELETE-ENTRY', payload: Entry[] }
     | { type: 'INITIAL-ENTRIES-DB', payload: Entry[] }
 
 
@@ -37,6 +38,11 @@ export const entriesReducer = (state: EntriesState, action: EntriesActionType): 
                     }
                     return entry;
                 })
+            }
+        case 'DELETE-ENTRY':
+            return {
+                ...state,
+                entries: [...action.payload]
             }
         case 'INITIAL-ENTRIES-DB':
             return {
