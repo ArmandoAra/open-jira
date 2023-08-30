@@ -1,0 +1,12 @@
+.card {
+  margin-bottom: 5px;
+}
+
+.descriptionTypography {
+  white-space: "pre-line";
+}
+
+.cardActionsTypography {
+  display: "flex";
+  gap: 30px;
+}

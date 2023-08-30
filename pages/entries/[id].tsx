@@ -2,25 +2,29 @@ import React, { ChangeEvent, useMemo, useState, FC, useContext } from 'react'
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 
-import { capitalize, Button, Card, CardActions, CardContent, CardHeader, FormControl, FormControlLabel, FormLabel, Grid, Radio, RadioGroup, TextField, IconButton } from '@mui/material';
+// Components
+import { Layout } from '@/components/layouts';
 
+// MUI
+import { capitalize, Button, Card, CardActions, CardContent, CardHeader, FormControl, FormControlLabel, FormLabel, Grid, Radio, RadioGroup, TextField, IconButton } from '@mui/material';
 import SaveAltOutlinedIcon from '@mui/icons-material/SaveAltOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { EntriesContext } from '@/context/entries';
 
-import { Layout } from '@/components/layouts';
+// interface
 import { Entry, EntryStatus } from '@/interfaces';
 
+// Database
 import { isValidObjectId } from 'mongoose';
 import { getEntryById } from '@/database';
-
 const validStatus: EntryStatus[] = ["pending", "in-progress", "done"]
-
-
 //Esta interface no va a inferir en los datos que vamos a recibir en las properties que vienen del server side props
 interface Props {
     entry: Entry
 }
+
+// Utils
+import { dateFunctions } from '@/utils';
 
 
 export const EntryPage: FC<Props> = ({ entry }) => {
@@ -62,6 +66,8 @@ export const EntryPage: FC<Props> = ({ entry }) => {
         //Actualizamos la entrada con el metodo que viene de EntriesContext
         updateEntry(updatedEntry, true);
 
+        router.push('/')
+
     }
 
     const onDelete = () => {
@@ -79,8 +85,8 @@ export const EntryPage: FC<Props> = ({ entry }) => {
                 <Grid item xs={12} sm={8} md={6}>
                     <Card>
                         <CardHeader
-                            title='Entrada'
-                            subheader={`Created : ${entry.created_at}`}
+                            title='Entry'
+                            subheader={`Created ${dateFunctions.getFormatDistanceToNow(entry.created_at)}`}
                         />
                         <CardContent >
                             <TextField sx={{ marginTop: 2, marginBottom: 1 }}

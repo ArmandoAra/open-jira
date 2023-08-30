@@ -16,7 +16,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <SnackbarProvider maxSnack={3}>
       <EntriesProvider>
         <UIProvider >
-          <ThemeProvider theme={lightTheme}>
+          <ThemeProvider theme={darkTheme}>
             <CssBaseline />
             <Component {...pageProps} />
           </ThemeProvider>

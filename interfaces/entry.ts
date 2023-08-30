@@ -11,5 +11,5 @@ export interface IsAddingEntryStatus {
 }
 
 // Podria ser tambien una inteface pero el type es porque en un futuro no lo voy a extender
-export type EntryStatus = 'pending' | 'in-progress' | 'done';
+export type EntryStatus = 'pending' | 'in-progress' | 'done' | string;
 

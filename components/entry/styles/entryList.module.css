@@ -2,7 +2,6 @@
   height: calc(100vh - 250px);
   overflow: scrol;
   background-color: transparent;
-  padding: 2;
 }
 
 .listNormalOpacity {
@@ -16,7 +15,10 @@
 }
 
 .dragging {
-  background-color: #c9f8de;
-  border: 2px #3cb21b;
+  background-color: #e6fce0;
   cursor: grabbing;
+}
+
+.noDaragging {
+  background-color: #111211;
 }

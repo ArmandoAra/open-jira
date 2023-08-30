@@ -36,17 +36,15 @@ export const NewEntry = () => {
         if (inputValue.length > 0) {
             addEntry(inputValue)
             setInputValue('')
-            toggleIsAdding()
         }
     }
 
     return (
-        <div>
+        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
             {
                 isAdding ?
-                    <Box>
+                    <Box sx={{ display: 'flex', width: '50vw', flexDirection: 'column' }}>
                         <TextField
-                            fullWidth
                             label='New Entry'
                             placeholder='Write a new entry'
                             autoFocus
@@ -63,15 +61,16 @@ export const NewEntry = () => {
 
                         />
                         <Box sx={{ display: 'flex', justifyContent: 'center', gap: '5px', margin: '10px 0' }}>
-                            <Button fullWidth variant='outlined' color='secondary' endIcon={<SaveOutlinedIcon />} onClick={saveEntry} >Save</Button>
-                            <Button fullWidth variant='outlined' sx={{ 'color': '#f50057' }} endIcon={<ClearOutlinedIcon />} onClick={toggleIsAdding}>Cancel</Button>
+                            <Button variant='outlined' color='secondary' endIcon={<SaveOutlinedIcon />} onClick={saveEntry} >Save</Button>
+                            <Button variant='outlined' sx={{ 'color': '#f50057' }} endIcon={<ClearOutlinedIcon />} onClick={toggleIsAdding}>Cancel</Button>
                         </Box>
                     </Box>
                     :
                     <Button
+                        fullWidth
                         variant='outlined'
                         color='secondary'
-                        fullWidth endIcon={<NoteAddOutlinedIcon />}
+                        endIcon={<NoteAddOutlinedIcon />}
                         sx={{ margin: '10px 0' }}
                         onClick={toggleIsAdding}
                     >
@@ -80,6 +79,6 @@ export const NewEntry = () => {
             }
 
 
-        </div>
+        </Box>
     )
 }

@@ -2,7 +2,6 @@ import { FC, useContext, useMemo, DragEvent } from "react";
 
 // Material UI
 import { List, Paper } from "@mui/material"
-import { EntryStatus } from "@/interfaces";
 
 // Context
 import { EntriesContext } from "@/context/entries";
@@ -17,7 +16,7 @@ import styles from './styles/entryList.module.css'
 
 // Interfaces
 interface Props {
-    status: EntryStatus;
+    status: string;
 }
 
 export const EntryList: FC<Props> = ({ status }) => {
@@ -55,10 +54,14 @@ export const EntryList: FC<Props> = ({ status }) => {
             onDrop={onDropEntry}
             onDragOver={allowDrop}
             className={isDragging ? styles.dragging : ''}
+
         >
-            <Paper className={styles.paper} >
+            <Paper className={styles.paper}  >
                 {/* Cambiara dependiendo si estoy haciendo un drag o no */}
-                <List className={isDragging ? styles.listMediumOpacity : styles.listNormalOpacity}>
+                <List
+                    className={isDragging ? styles.listMediumOpacity : styles.listNormalOpacity}
+                    style={{ padding: '0', marginBottom: '3px' }}
+                >
                     {/* Aqui van a ir las tareas */}
                     {
                         filteredEntriesByStatus.map(entry => (
