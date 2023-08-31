@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 
 
 // MUI
-import { Card, CardActionArea, CardActions, CardContent, IconButton, Typography } from '@mui/material'
+import { Box, Button, Card, CardActionArea, CardActions, CardContent, IconButton, Typography } from '@mui/material'
 import { UIContext } from '@/context/ui';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 
@@ -62,10 +62,10 @@ export const EntryCard: FC<Props> = ({ entry }) => {
             onDragEnd={onDragEnd}
 
         >
-            <CardActionArea sx={{ display: 'flex', flexDirection: 'column' }}>
+            <CardActionArea onClick={onCardCliked} sx={{ display: 'flex', flexDirection: 'column' }}>
                 <CardContent
-                    onClick={onCardCliked}
-                    sx={{ backgroundColor: '#d8d8d8' }}
+
+                    sx={{ backgroundColor: '#d8d8d8', width: 'inherit' }}
                 >
                     <Typography className={styles.descriptionTypography}>
                         {/* Descripcion */}
@@ -74,17 +74,23 @@ export const EntryCard: FC<Props> = ({ entry }) => {
                 </CardContent>
                 <CardActions className={styles.cardActionsTypography} >
                     <Typography variant='body2'>{dateFunctions.getFormatDistanceToNow(entry.created_at)}</Typography>
-
-                    <IconButton sx={{
-                        display: 'flex',
-                        backgroundColor: 'error.dark',
-                    }}
-                        onClick={onDelete}
-                    >
-                        <DeleteOutlineOutlinedIcon />
-                    </IconButton>
                 </CardActions>
             </CardActionArea>
+            <CardContent sx={{
+                display: 'flex',
+                justifyContent: 'end',
+            }}>
+                <IconButton sx={{
+                    backgroundColor: 'error.dark',
+                    marginRight: '15px',
+                    position: 'relative',
+                    bottom: '20px'
+                }}
+                    onClick={onDelete}
+                >
+                    <DeleteOutlineOutlinedIcon />
+                </IconButton>
+            </CardContent>
 
         </Card>
     )

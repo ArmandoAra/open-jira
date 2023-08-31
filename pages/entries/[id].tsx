@@ -82,14 +82,14 @@ export const EntryPage: FC<Props> = ({ entry }) => {
                 justifyContent='center'
                 sx={{ marginTop: 2 }}
             >
-                <Grid item xs={12} sm={8} md={6}>
-                    <Card>
+                <Grid item xs={12} sm={8} md={6} sx={{ display: 'flex', justifyContent: 'center' }}>
+                    <Card sx={{ textAlign: 'center' }}>
                         <CardHeader
                             title='Entry'
                             subheader={`Created ${dateFunctions.getFormatDistanceToNow(entry.created_at)}`}
                         />
                         <CardContent >
-                            <TextField sx={{ marginTop: 2, marginBottom: 1 }}
+                            <TextField sx={{ marginBottom: 1 }}
                                 fullWidth
                                 placeholder='New entry'
                                 autoFocus
@@ -102,7 +102,7 @@ export const EntryPage: FC<Props> = ({ entry }) => {
                                 error={isNotValid}
                             />
 
-                            <FormControl>
+                            <FormControl >
                                 <FormLabel>
                                     State:
                                 </FormLabel>

@@ -1,10 +1,14 @@
-import { createTheme } from "@mui/material";
+import { createTheme, Typography } from '@mui/material';
 import { red } from "@mui/material/colors";
+import { Color } from '../../next-pokemon/interfaces/descriptionData';
 
 
 export const darkTheme = createTheme({
     palette: {
         mode: 'dark',
+        primary: {
+            main: '#558A1B'
+        },
         secondary: {
             main: '#313131',
         },
@@ -21,9 +25,18 @@ export const darkTheme = createTheme({
             styleOverrides: {
                 root: {
                     background: '#313131',
-                    color: '#fff',
+                    color: '#558A1B',
                 },
             },
         },
+        MuiCard: {
+            styleOverrides: {
+                root: {
+                    background: '#313131',
+                    color: '#0c0c0d',
+                },
+            },
+
+        }
     }
 })

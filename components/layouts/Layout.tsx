@@ -1,7 +1,7 @@
 import { Box } from "@mui/material"
 import Head from "next/head"
 import { FC } from "react"
-import { Navbar, Sidebar } from "../nav"
+import { Navbar } from "../nav"
 
 
 interface LayoutProps {
@@ -14,12 +14,11 @@ export const Layout: FC<LayoutProps> = ({ title, children }) => {
         //El sx es para darle estilos de forma inline pero tiene acceso a los themes
         <Box sx={{ flexFlow: 1 }}>
             <Head>
-                <title>{title ? title : 'Open Jira'}</title>
+                <title>{title ? title : 'My Open Jira'}</title>
             </Head>
 
             {/* NavBar and Sidebar */}
             <Navbar />
-            <Sidebar />
 
             <Box component='main' sx={{ padding: '10px 20px' }}>
                 {children}

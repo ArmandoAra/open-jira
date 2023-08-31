@@ -66,10 +66,11 @@ export const NewEntry = () => {
                         </Box>
                     </Box>
                     :
+
                     <Button
                         fullWidth
                         variant='outlined'
-                        color='secondary'
+                        color='primary'
                         endIcon={<NoteAddOutlinedIcon />}
                         sx={{ margin: '10px 0' }}
                         onClick={toggleIsAdding}

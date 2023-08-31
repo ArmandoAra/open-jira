@@ -9,6 +9,7 @@ interface ContextProps {
     sideMenuOpen: boolean;
     isAdding: boolean;
     isDragging: boolean;
+    isOnLightTheme: boolean;
 
     // Methods
     openSideBar: () => void;
@@ -16,6 +17,7 @@ interface ContextProps {
     setIsAddingEntryStatus: (isAdding: boolean) => void;
     startDragging: () => void;
     endDragging: () => void;
+    setTheme: () => void;
 }
 
 export const UIContext = createContext({} as ContextProps);

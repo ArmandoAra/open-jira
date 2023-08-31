@@ -15,6 +15,8 @@ type UIActionType =
     | { type: 'OPEN_SIDEBAR' }
     | { type: 'CLOSE_SIDEBAR' }
     | { type: 'IS-ADDING-ENTRY', payload: boolean }
+    | { type: 'LIGHT-THEME' }
+    | { type: 'DARK-THEME' }
     //Hacer lo siguiento como en isAddingEntry con el payload y un toggle
     | { type: 'START-DRAGGING' }
     | { type: 'END-DRAGGING' }
@@ -35,6 +37,16 @@ export const uiReducer = (state: UIState, action: UIActionType): UIState => {
             return {
                 ...state,
                 sideMenuOpen: false
+            }
+        case 'LIGHT-THEME':
+            return {
+                ...state,
+                isOnLightTheme: true
+            }
+        case 'DARK-THEME':
+            return {
+                ...state,
+                isOnLightTheme: false
             }
         case 'IS-ADDING-ENTRY':
             return {

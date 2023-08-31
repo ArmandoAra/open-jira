@@ -15,12 +15,14 @@ export interface UIState {
     sideMenuOpen: boolean;
     isAdding: boolean;
     isDragging: boolean;
+    isOnLightTheme: boolean;
 }
 
 const UI_INITIAL_STATE: UIState = {
     sideMenuOpen: false,
     isAdding: false,
     isDragging: false,
+    isOnLightTheme: false,
 }
 
 export const UIProvider = ({ children }: UIProviderProps) => {
@@ -35,6 +37,9 @@ export const UIProvider = ({ children }: UIProviderProps) => {
 
     }
 
+    const setTheme = () => { state.isOnLightTheme ? dispatch({ type: 'DARK-THEME' }) : dispatch({ type: 'LIGHT-THEME' }) }
+
+
     // Dragging
     const startDragging = () => { dispatch({ type: 'START-DRAGGING' }) }
     const endDragging = () => { dispatch({ type: 'END-DRAGGING' }) }
@@ -46,6 +51,7 @@ export const UIProvider = ({ children }: UIProviderProps) => {
             openSideBar,
             closeSideBar,
             setIsAddingEntryStatus,
+            setTheme,
 
             startDragging,
             endDragging,

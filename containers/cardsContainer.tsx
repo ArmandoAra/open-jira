@@ -15,7 +15,7 @@ export const CardsContainer = () => {
             <NewEntry />
             <Grid container  >
                 {cards.map((card, index) => (
-                    <Grid xs={12} key={index} sm={4} sx={{ height: 'calc(100vh - 100px)' }}>
+                    <Grid item xs={12} key={index} sm={4} sx={{ height: 'calc(100vh - 100px)' }}>
                         <CardHeader sx={{ display: 'flex', textAlign: 'center', padding: '0px', paddingTop: '10px' }} title={card[0]} />
                         <CardContent>
                             {/* Agregar una nueva entrada */}
